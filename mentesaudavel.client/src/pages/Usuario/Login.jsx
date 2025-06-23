@@ -20,7 +20,7 @@ export default Login;
 async function getUsuarios() {
     let usuarios = []
 
-    const retorno = await api.get('https://localhost:7054/api/usuarios');
+    const retorno = await api.get('https://localhost:5021/api/usuarios');
 
     usuarios = retorno.data;
     console.log(usuarios);
