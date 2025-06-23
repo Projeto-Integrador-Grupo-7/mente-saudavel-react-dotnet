@@ -1,4 +1,4 @@
-﻿using MenteSaudavel.Server._02.Services.Interfaces;
+using MenteSaudavel.Server._02.Services.Interfaces.Repositories;
 
 namespace MenteSaudavel.Server._02.Services.Repositories
 {
@@ -21,7 +21,7 @@ namespace MenteSaudavel.Server._02.Services.Repositories
             return _context.Set<TEntity>().AsQueryable();
         }
 
-        public virtual TEntity? GetById(int id)
+        public virtual TEntity? GetById(Guid id)
         {
             return _context.Find<TEntity>(id);
         }

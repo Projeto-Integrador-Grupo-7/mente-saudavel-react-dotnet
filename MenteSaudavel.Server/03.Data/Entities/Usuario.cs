@@ -94,7 +94,7 @@ namespace MenteSaudavel.Server._03.Data.Entities
             return Questionarios.OrderBy(questionario => questionario.DataEnvio).FirstOrDefault();
         }
 
-        public UsuarioTO ToUsuarioTO()
+        public UsuarioTO ToDto()
         {
             return new UsuarioTO()
             {

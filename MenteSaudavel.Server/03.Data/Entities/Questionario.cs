@@ -5,7 +5,23 @@ namespace MenteSaudavel.Server._03.Data.Entities
     public class Questionario : Entity
     {
         #region PROPRIEDADES
-        public Usuario Respondente { get; private set; }
+        private Usuario _respondente;
+        public Usuario Respondente
+        {
+            get
+            {
+                return _respondente;
+            }
+            set
+            {
+                if (value is null)
+                {
+                    throw new ArgumentException("Respondente não pode ser nulo.");
+                }
+
+                _respondente = value;
+            }
+        }
 
         public int? Pontuacao { get; private set; }
 
@@ -19,10 +35,10 @@ namespace MenteSaudavel.Server._03.Data.Entities
         #region CONSTRUTORES
         internal Questionario() { }
 
-        public Questionario(Usuario respondente, DateTime dataEnvio)
+        public Questionario(Usuario? respondente)
         {
             Respondente = respondente;
-            DataEnvio = dataEnvio;
+            DataEnvio = DateTime.Now;
         }
         #endregion
 

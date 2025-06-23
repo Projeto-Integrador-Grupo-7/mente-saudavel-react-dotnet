@@ -1,4 +1,4 @@
-﻿using MenteSaudavel.Server._02.Services;
+using MenteSaudavel.Server._02.Services;
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
 using MenteSaudavel.Server._02.Services.Services;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,7 @@ namespace MenteSaudavel.Server
             services.AddTransient<DataBaseContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IQuestionarioService, QuestionarioService>();
         }
 
         public static void ConfigureApplication(WebApplication app)

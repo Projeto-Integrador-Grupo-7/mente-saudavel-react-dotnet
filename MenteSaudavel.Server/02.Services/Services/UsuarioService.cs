@@ -18,7 +18,7 @@ namespace MenteSaudavel.Server._02.Services.Services
         {
             List<Usuario> listaUsuarios = await _unitOfWork.UsuarioRepository.GetAll().ToListAsync();
 
-            List<UsuarioTO> listaUsuariosTO = listaUsuarios.Select(usuario => usuario.ToUsuarioTO()).ToList();
+            List<UsuarioTO> listaUsuariosTO = listaUsuarios.Select(usuario => usuario.ToDto()).ToList();
 
             return listaUsuariosTO;
         }

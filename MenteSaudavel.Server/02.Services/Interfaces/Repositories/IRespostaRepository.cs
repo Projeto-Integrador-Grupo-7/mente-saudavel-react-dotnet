@@ -2,7 +2,7 @@ using MenteSaudavel.Server._03.Data.Entities;
 
 namespace MenteSaudavel.Server._02.Services.Interfaces.Repositories
 {
-    public interface IUsuarioRepository : IRepository<Usuario>
+    public interface IRespostaRepository : IRepository<Resposta>
     {
     }
 }

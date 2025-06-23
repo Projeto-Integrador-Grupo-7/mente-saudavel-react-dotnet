@@ -3,9 +3,9 @@ using MenteSaudavel.Server._03.Data.Entities;
 
 namespace MenteSaudavel.Server._02.Services.Repositories
 {
-    public class UsuarioRepository : GenericRepository<Usuario>, IUsuarioRepository
+    public class QuestionarioRepository : GenericRepository<Questionario>, IQuestionarioRepository
     {
-        public UsuarioRepository(DataBaseContext context) : base(context)
+        public QuestionarioRepository(DataBaseContext context) : base(context)
         {
         }
     }

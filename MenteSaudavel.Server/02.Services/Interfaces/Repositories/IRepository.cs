@@ -1,4 +1,4 @@
-﻿namespace MenteSaudavel.Server._02.Services.Interfaces
+namespace MenteSaudavel.Server._02.Services.Interfaces.Repositories
 {
     public interface IRepository<TEntity>
     {
@@ -6,7 +6,7 @@
 
         IQueryable<TEntity> GetAll();
 
-        TEntity? GetById(int id);
+        TEntity? GetById(Guid id);
 
         void Add(TEntity entity);
 
