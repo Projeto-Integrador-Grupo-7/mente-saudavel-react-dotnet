@@ -1,4 +1,5 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
+using MenteSaudavel.Server._03.Data.ValueObjects;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,31 @@ namespace MenteSaudavel.Server._01.API.Controllers
         public UsuarioController(IUsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> ValidarLogin([FromBody] Dictionary<string, string> dados)
+        {
+            try
+            {
+                UsuarioTO usuarioTO = new UsuarioTO
+                {
+                    Email = new Email(dados["email"]),
+                    Senha = dados["senha"]
+                };
+
+                UsuarioTO usuario = await _usuarioService.ValidarLogin(usuarioTO);
+
+                return Ok(usuario);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Ocorreu um erro ao validar email e senha.", Detalhes = ex.Message });
+            }
         }
 
         [HttpGet]
@@ -53,5 +79,5 @@ namespace MenteSaudavel.Server._01.API.Controllers
                 return StatusCode(500, "Ocorreu um erro ao cadastrar o usuário.");
             }
         }
-    }
+    }   
 }

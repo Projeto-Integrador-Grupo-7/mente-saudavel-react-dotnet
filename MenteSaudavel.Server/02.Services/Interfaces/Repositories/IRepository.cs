@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 namespace MenteSaudavel.Server._02.Services.Interfaces.Repositories
 {
     public interface IRepository<TEntity>
@@ -14,8 +16,8 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Repositories
 
         void Delete(TEntity entity);
 
-        IQueryable<TEntity> Find(Func<TEntity, bool> predicate);
+        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
-        bool Any(Func<TEntity, bool> predicate);
+        bool Any(Expression<Func<TEntity, bool>> predicate);
     }
 }

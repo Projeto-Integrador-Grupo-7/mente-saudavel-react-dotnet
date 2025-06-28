@@ -14,6 +14,18 @@ namespace MenteSaudavel.Server._02.Services.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<UsuarioTO> ValidarLogin(UsuarioTO usuarioTO)
+        {
+            Usuario? usuario = await _unitOfWork.UsuarioRepository.GetUsuarioByEmailESenha(usuarioTO);
+
+            if (usuario is null)
+            {
+                throw new ArgumentException("Email ou senha incorretos.");
+            }
+
+            return usuario.ToDto();
+        }
+
         public async Task<List<UsuarioTO>> GetUsuariosAsync()
         {
             List<Usuario> listaUsuarios = await _unitOfWork.UsuarioRepository.GetAll().ToListAsync();

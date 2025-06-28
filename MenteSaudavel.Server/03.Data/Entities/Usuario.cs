@@ -25,6 +25,7 @@ namespace MenteSaudavel.Server._03.Data.Entities
         }
 
         public Email Email { get; set; }
+        public string EmailEndereco => Email.Endereco;
 
         private string _senha;
         public string Senha

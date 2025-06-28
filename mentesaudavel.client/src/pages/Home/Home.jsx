@@ -5,34 +5,35 @@ import Input from '../../components/Input';
 import { Link } from 'react-router-dom';
 import favicon from '../../images/favicon.ico';
 import PasswordVerification from '../../components/PasswordVerification';
+import api from '../../services/api';
 
 const Home = () => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        if (!email || !senha) {
-            alert('Preencha todos os campos!');
-            return;
-        }
-        fetch('https://localhost:5021/api/usuarios', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, senha }),
-        })
-        .then(async response => {
-            if (!response.ok) {
-                const errorText = await response.text();
-                alert(`Erro ao fazer login! Código: ${response.status}\n${errorText}`);
+    const handleLogin = async (e) => {
+        try {
+            e.preventDefault();
+
+            if (!email || !senha) {
+                alert('Preencha todos os campos!');
                 return;
             }
+
+            const dados = {
+                email: email,
+                senha: senha
+            }
+
+            await api.post('usuarios/login', dados);
+
             alert('Login realizado com sucesso!');
-        })
-        .catch(error => {
-            alert('Erro ao fazer login! ' + error);
-        });
-    };
+        }
+        catch (error) {
+            let response = error.response.data;
+            alert('Erro ao fazer login: ' + response.mensagem + '\n\nDetalhes: ' + response.detalhes);
+        }
+    }
 
     return (
         <div className='page'>

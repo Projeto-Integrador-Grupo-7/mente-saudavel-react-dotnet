@@ -4,6 +4,8 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Services
 {
     public interface IUsuarioService
     {
+        Task<UsuarioTO> ValidarLogin(UsuarioTO usuarioTO);
+
         Task<List<UsuarioTO>> GetUsuariosAsync();
 
         Task<UsuarioTO> CriarUsuarioAsync(UsuarioTO usuarioTO);
