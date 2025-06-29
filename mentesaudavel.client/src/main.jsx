@@ -8,6 +8,7 @@ import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home/Home';
 import Cadastro from './pages/Usuario/Cadastro';
 import Login from './pages/Usuario/Login';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />,
+            },
+            {
+                path: '/dashboard',
+                element: <Dashboard />
             }
         ]
     }

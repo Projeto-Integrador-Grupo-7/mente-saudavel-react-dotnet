@@ -13,7 +13,7 @@ namespace MenteSaudavel.Server._04.Infrastructure.Extensions
                 .Cast<DisplayAttribute>()
                 .FirstOrDefault();
 
-            return attribute?.Description ?? value.ToString();
+            return attribute?.Name ?? value.ToString();
         }
 
         public static int GetIntValue(this Enum value)
