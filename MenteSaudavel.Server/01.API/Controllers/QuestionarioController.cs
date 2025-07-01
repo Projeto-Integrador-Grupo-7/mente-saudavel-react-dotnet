@@ -20,7 +20,7 @@ namespace MenteSaudavel.Server._01.API.Controllers
         {
             try
             {
-                questionarioTO = await _questionarioService.CriarQuestionarioAsync(questionarioTO);
+                questionarioTO = await _questionarioService.CriarQuestionario(questionarioTO);
 
                 return Ok(questionarioTO);
             }

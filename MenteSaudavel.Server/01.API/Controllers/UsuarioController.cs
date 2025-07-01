@@ -42,11 +42,11 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsuariosAsync()
+        public async Task<IActionResult> GetUsuarios()
         {
             try
             {
-                List<UsuarioTO> listaUsuario = await _usuarioService.GetUsuariosAsync();
+                List<UsuarioTO> listaUsuario = await _usuarioService.GetUsuarios();
 
                 if (!listaUsuario.Any())
                 {
@@ -62,11 +62,11 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarUsuarioAsync(UsuarioTO usuarioTO)
+        public async Task<IActionResult> CriarUsuario(UsuarioTO usuarioTO)
         {
             try
             {
-                usuarioTO = await _usuarioService.CriarUsuarioAsync(usuarioTO);
+                usuarioTO = await _usuarioService.CriarUsuario(usuarioTO);
 
                 return Ok(usuarioTO);
             }

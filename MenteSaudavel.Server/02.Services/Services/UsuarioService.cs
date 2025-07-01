@@ -26,7 +26,7 @@ namespace MenteSaudavel.Server._02.Services.Services
             return usuario.ToDto();
         }
 
-        public async Task<List<UsuarioTO>> GetUsuariosAsync()
+        public async Task<List<UsuarioTO>> GetUsuarios()
         {
             List<Usuario> listaUsuarios = await _unitOfWork.UsuarioRepository.GetAll().ToListAsync();
 
@@ -35,7 +35,7 @@ namespace MenteSaudavel.Server._02.Services.Services
             return listaUsuariosTO;
         }
 
-        public async Task<UsuarioTO> CriarUsuarioAsync(UsuarioTO usuarioTO)
+        public async Task<UsuarioTO> CriarUsuario(UsuarioTO usuarioTO)
         {
             Usuario usuario = new Usuario(usuarioTO);
 
@@ -45,6 +45,20 @@ namespace MenteSaudavel.Server._02.Services.Services
             usuarioTO.UsuarioId = usuario.Id;
 
             return usuarioTO;
+        }
+
+        public async Task<List<QuestionarioTO>> GetHistoricoByUsuarioId(Guid usuarioId)
+        {
+            Usuario? usuario = await _unitOfWork.UsuarioRepository.GetById(usuarioId);
+
+            if (usuario is null)
+            {
+                throw new ArgumentException("Usuário não encontrado.");
+            }
+
+           // List<QuestionarioTO> listaQuestionariosRespondidos = usuario.Questionarios.Select(questionario => questionario.ToDto());
+
+            return new List<QuestionarioTO>();
         }
     }
 }

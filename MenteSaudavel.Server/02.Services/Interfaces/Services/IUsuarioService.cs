@@ -6,8 +6,10 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Services
     {
         Task<UsuarioTO> ValidarLogin(UsuarioTO usuarioTO);
 
-        Task<List<UsuarioTO>> GetUsuariosAsync();
+        Task<List<UsuarioTO>> GetUsuarios();
 
-        Task<UsuarioTO> CriarUsuarioAsync(UsuarioTO usuarioTO);
+        Task<UsuarioTO> CriarUsuario(UsuarioTO usuarioTO);
+
+        Task<List<QuestionarioTO>> GetHistoricoByUsuarioId(Guid usuarioId);
     }
 }
