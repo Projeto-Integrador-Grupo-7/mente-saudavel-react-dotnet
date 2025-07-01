@@ -3,12 +3,14 @@ using MenteSaudavel.Server._03.Data.ValueObjects;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
 using MenteSaudavel.Server._04.Infrastructure.Enums;
 using MenteSaudavel.Server._04.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
 {
     [ApiController]
     [Route("api/dashboard")]
+    //[Authorize]
     public class DashboardController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;

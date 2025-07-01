@@ -1,11 +1,13 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
 {
     [ApiController]
     [Route("api/questionarios")]
+    //[Authorize]
     public class QuestionarioController : ControllerBase
     {
         private readonly IQuestionarioService _questionarioService;

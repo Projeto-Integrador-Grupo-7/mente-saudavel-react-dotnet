@@ -1,6 +1,8 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
+using MenteSaudavel.Server._02.Services.Services;
 using MenteSaudavel.Server._03.Data.ValueObjects;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
+using MenteSaudavel.Server._04.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
@@ -9,10 +11,12 @@ namespace MenteSaudavel.Server._01.API.Controllers
     [Route("api/usuarios")]
     public class UsuarioController : ControllerBase
     {
+        private readonly ITokenService _tokenService;
         private readonly IUsuarioService _usuarioService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(ITokenService tokenService, IUsuarioService usuarioService)
         {
+            _tokenService = tokenService;
             _usuarioService = usuarioService;
         }
 
@@ -29,7 +33,18 @@ namespace MenteSaudavel.Server._01.API.Controllers
 
                 UsuarioTO usuario = await _usuarioService.ValidarLogin(usuarioTO);
 
+                _tokenService.GenerateToken(ref usuario);
+
+                if (string.IsNullOrEmpty(usuario.Token))
+                {
+                    throw new TokenException("O servidor não conseguiu gerar o token de autenticação. Por favor, contate o administrador do sistema.");
+                }
+
                 return Ok(usuario);
+            }
+            catch (TokenException ex)
+            {
+                return Unauthorized(new { Mensagem = "Falha ao gerar token de autenticação.", Detalhes = ex.Message });
             }
             catch (ArgumentException ex)
             {
