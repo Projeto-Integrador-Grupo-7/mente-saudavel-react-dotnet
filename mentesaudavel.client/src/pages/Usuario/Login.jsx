@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Input from '../../components/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import favicon from '../../images/favicon.ico';
 import PasswordVerification from '../../components/PasswordVerification';
 import api from '../../services/api';
@@ -11,6 +11,7 @@ import api from '../../services/api';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         try {
@@ -28,7 +29,13 @@ const Login = () => {
 
             const response = await api.post('usuarios/login', dados);
 
+            if (response.status == 400) {
+                alert('Erro ao fazer login: ' + response.data.mensagem);
+                return;
+            }
+
             alert('Login realizado com sucesso!');
+            navigate('/home');
         }
         catch (error) {
             let response = error.response.data;

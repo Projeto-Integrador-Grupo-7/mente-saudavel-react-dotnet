@@ -23,6 +23,16 @@ namespace MenteSaudavel.Server._03.Data.ValueObjects
             };
         }
 
+        public Genero(char genero) : this(
+            genero switch
+            {
+                'F' => EnumGenero.Feminino.GetIntValue(),
+                'M' => EnumGenero.Masculino.GetIntValue(),
+                'O' => EnumGenero.Outro.GetIntValue(),
+                _ => throw new ArgumentOutOfRangeException(nameof(genero), "Gênero inválido.")
+            }
+        ) { }
+
         public bool IsFeminino => Valor == EnumGenero.Feminino.GetIntValue();
         public bool IsMasculino => Valor == EnumGenero.Masculino.GetIntValue();
         public bool IsOutro => Valor == EnumGenero.Outro.GetIntValue();

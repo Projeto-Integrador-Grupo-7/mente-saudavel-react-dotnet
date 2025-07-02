@@ -77,21 +77,33 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarUsuario(UsuarioTO usuarioTO)
+        public async Task<IActionResult> CriarUsuario([FromBody] Dictionary<string, string> dados)
         {
             try
             {
+                string dataNascimento = dados["dataNascimento"];
+                string[] arrayDataNascimento = dataNascimento.Split('-');
+
+                UsuarioTO usuarioTO = new UsuarioTO
+                {
+                    Nome = dados["nome"],
+                    Email = new Email(dados["email"]),
+                    Senha = dados["senha"],
+                    DataNascimento = new DateOnly(int.Parse(arrayDataNascimento[0]), int.Parse(arrayDataNascimento[1]), int.Parse(arrayDataNascimento[2])),
+                    Genero = new Genero(char.Parse(dados["sexo"]))
+                };
+
                 usuarioTO = await _usuarioService.CriarUsuario(usuarioTO);
 
                 return Ok(usuarioTO);
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { Mensagem = ex.Message });
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao cadastrar o usuário.");
+                return StatusCode(500, new { Mensagem = "Ocorreu um erro ao tentar cadastrar o usuário.", Detalhes = ex.Message });
             }
         }
     }   

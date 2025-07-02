@@ -16,8 +16,6 @@ namespace MenteSaudavel.Server._04.Infrastructure.Dto
 
         public Genero Genero { get; set; }
 
-        public bool? IsAdmin { get; set; }
-
         public string? Token { get; set; }
     }
 }
