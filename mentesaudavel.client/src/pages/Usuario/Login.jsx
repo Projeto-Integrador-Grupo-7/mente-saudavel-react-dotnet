@@ -1,3 +1,4 @@
+import './usuario.css';
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
