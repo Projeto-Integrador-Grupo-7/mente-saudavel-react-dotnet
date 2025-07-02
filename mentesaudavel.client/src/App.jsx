@@ -1,10 +1,9 @@
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
-    debugger;
     const location = useLocation();
     const hideNavigation = ["/login", "/cadastro"].includes(location.pathname.toLowerCase());
 

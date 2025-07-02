@@ -69,7 +69,7 @@ const Cadastro = () => {
                     </div>
 
                     <div className='pagefooter'>
-                        <Link to={'/'}>
+                        <Link to={'/login'}>
                             <Button secondary>Já possuo uma conta</Button>
                         </Link>
                         <Button primary type='submit'>Cadastrar</Button>

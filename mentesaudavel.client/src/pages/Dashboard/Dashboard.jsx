@@ -1,13 +1,19 @@
+import './Dashboard.css'
 import { useState, useEffect } from 'react';
-import PieChart from '../../components/PieChart';
-import Table from '../../components/Table';
+import PieChart from '../../components/PieChart/PieChart';
+import Table from '../../components/Table/Table';
 import api from '../../services/api';
 
 const Dashboard = () => {
     const [pieChartLabels, setPieChartLabels] = useState([]);
     const [pieChartValues, setPieChartValues] = useState([]);
     const [tableData, setTableData] = useState([]);
-    const colunas = ['Numero', 'Estratificacao', 'Pontuacao', 'DataEnvio'];
+    const colunas = [
+        { header: 'Número', accessor: 'Numero' },
+        { header: 'Estratificação', accessor: 'Estratificacao' },
+        { header: 'Pontuação', accessor: 'Pontuacao' },
+        { header: 'Data de Envio', accessor: 'DataEnvio' }
+    ];
 
     const getTableData = async () => {
         try {
@@ -20,7 +26,7 @@ const Dashboard = () => {
 
                 const dados = response.data.map(item =>
                 ({
-                    Numero: count +=1,
+                    Numero: count += 1,
                     Estratificacao: item.estratificacao.descricao,
                     Pontuacao: item.pontuacao,
                     DataEnvio: item.dataEnvio
@@ -54,23 +60,19 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div style={{ display: 'flex', height: '100vh', padding: '20px', boxSizing: 'border-box' }}>
-            <div style={{ flex: 1, paddingRight: '20px' }}>
-                <Table
-                    title="Questionários Respondidos"
-                    columns={colunas}
-                    data={tableData}
-                />
-            </div>
-            <div>
-                <PieChart
-                    title="Usuários por Estratificação"
-                    labels={pieChartLabels}
-                    tooltipLabel="Usuários"
-                    dataValues={pieChartValues}
-                    colors={['#36A2EB', '#56FF7B', '#FFCE56', '#FF6384']}
-                />
-            </div>
+        <div className='container'>
+            <Table
+                title="Questionários Respondidos"
+                columns={colunas}
+                data={tableData}
+            />
+            <PieChart
+                title="Usuários por Estratificação"
+                labels={pieChartLabels}
+                tooltipLabel="Usuários"
+                dataValues={pieChartValues}
+                colors={['#36A2EB', '#56FF7B', '#FFCE56', '#FF6384']}
+            />
         </div>
     );
 }
