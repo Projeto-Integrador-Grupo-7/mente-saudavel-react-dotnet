@@ -34,7 +34,7 @@ namespace MenteSaudavel.Server._01.API.Controllers
                         Id = Guid.NewGuid(),
                         Estratificacao = new Estratificacao(15),
                         Pontuacao = 15,
-                        DataEnvio = DateTime.Now.AddDays(-10)
+                        DataEnvio = DateTime.Now.AddDays(-10).GetDataHorario()
                     }
                 };
 

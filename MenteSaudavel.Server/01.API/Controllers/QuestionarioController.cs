@@ -18,7 +18,7 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarQuestionarioAsync(QuestionarioTO questionarioTO)
+        public async Task<IActionResult> CriarQuestionario(QuestionarioTO questionarioTO)
         {
             try
             {
