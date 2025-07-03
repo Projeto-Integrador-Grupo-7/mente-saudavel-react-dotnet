@@ -9,6 +9,7 @@ import Home from './pages/Home/Home';
 import Cadastro from './pages/Usuario/Cadastro';
 import Login from './pages/Usuario/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Resultado from './pages/Resultado/Resultado';
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <Dashboard />
+            },
+             {
+                path: '/resultado',
+                element: <Resultado />
             }
         ]
     }
