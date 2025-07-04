@@ -15,9 +15,9 @@ namespace MenteSaudavel.Server._02.Services.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<QuestionarioTO> CriarQuestionarioAsync(QuestionarioTO questionarioTO)
+        public async Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO)
         {
-            Usuario? respondente = _unitOfWork.UsuarioRepository.GetById(questionarioTO.RespondenteId);
+            Usuario? respondente = await _unitOfWork.UsuarioRepository.GetById(questionarioTO.RespondenteId);
 
             Questionario questionario = new Questionario(respondente);
 
@@ -31,7 +31,7 @@ namespace MenteSaudavel.Server._02.Services.Services
             await _unitOfWork.SaveChangesAsync();
 
             questionarioTO.Id = questionario.Id;
-            questionarioTO.DataEnvio = questionario.DataEnvio;
+            questionarioTO.DataEnvio = questionario.DataEnvio.GetDataHorario();
             questionarioTO.ListaRespostas = questionario.Respostas.Select(resposta => resposta.ToDto()).ToList();
 
             return questionarioTO;

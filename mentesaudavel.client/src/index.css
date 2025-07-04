@@ -1,217 +1,72 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(116deg, #F5FAFF 10.36%, #BDDEFA 106.14%);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-form {
-  all: unset;
-  display: contents;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('fonts/Roboto-Regular.ttf') format('truetype');
-  font-style: normal;
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Regular.ttf') format('truetype');
+    font-style: normal;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+    font-weight: 500;
+    color: #14558B;
+    text-decoration: none;
 }
 
-.page{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 100dvw;
-  min-height: 100dvh;
-}
+    a:hover {
+        color: #58A1DD;
+    }
 
 body {
   
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    font-size: 3.2em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 5px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 5px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+    button:hover {
+        border-color: #646cff;
+    }
 
-.btn {
-  margin: 0.5rem;
-}
-
-.btn.primary{
-    border-radius: 15px;
-    background: #0BD2FF;
-    outline: none;
-}
-
-.btn.primary:hover{
-  border-color: #fff;
-}
-
-.btn.secondary{
-    border-radius: 15px;
-    border: 5px solid #0BD2FF;
-    background: transparent;
-    outline: none;
-}
-
-.btn.secondary:hover{
-  border-color: #fff;
-}
-
-.card{
-  display: flex;
-  min-width: 500px;
-  padding: 40px;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  border-radius: 20px;
-  background: #58A1DD;
-}
-
-.cardprimary{
-  display: flex;
-  width: 100%;
-  gap: 15px;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cardsecondary{
-  display: flex;
-  width: 100%;
-  gap: 15px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.input{
-  display: flex;
-  min-height: 30px;
-  padding: 7px 19px;
-  align-items: center;
-  align-self: stretch;
-  font-size: 20px;
-  border: 2px solid transparent;
-  border-radius: 15px;
-  background: #FFF;
-  color: #9b9b9b;
-}
-
-.input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(41%) sepia(99%) saturate(749%) hue-rotate(163deg) brightness(98%) contrast(101%);
-}
-
-.input::placeholder{
-  color: #CACACA;
-}
-
-.input:focus-visible{
-  border: 2px solid #cacaca;
-  outline: 0;
-}
-
-.pagefooter{
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.recoverypassword{
-  align-self: flex-start;
-  margin-left: 19px;
-  color: #fff;
-}
-
-.recoverypassword:hover{
-  border: none;
-  background-color: transparent;
-  text-decoration: underline;
-  color: #fff;
-}
-
-.logo-title {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 5px;
-}
-
-.logo-img {
-  width: 60px;
-  height: 60px;
-}
-
-.logo-text {
-  margin: 0;
-  font-family: "Roboto";
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.25px;
-  color: #FFF;
-}
-
-.password-tooltip {
-  position: relative;
-  background: #fff;
-  color: #213547;
-  padding: 12px 18px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  font-size: 1em;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  max-width: 320px;
-}
+    button:focus,
+    button:focus-visible {
+        outline: 4px auto -webkit-focus-ring-color;
+    }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+
+    a:hover {
+        color: #747bff;
+    }
+
+    button {
+        background-color: #f9f9f9;
+    }
 }

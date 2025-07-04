@@ -4,7 +4,7 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Services
 {
     public interface IQuestionarioService
     {
-        Task<QuestionarioTO> CriarQuestionarioAsync(QuestionarioTO questionarioTO);
+        Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO);
 
         Task<Dictionary<string, int>> GetQtdeUsuariosPorEstratificacao();
     }

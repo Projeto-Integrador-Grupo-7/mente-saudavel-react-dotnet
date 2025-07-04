@@ -1,0 +1,47 @@
+header {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    background-color: #f2f2f2;
+    gap: 1.5rem;
+    color: #14558B;
+}
+
+    header a:first-child:hover {
+        color: #58A1DD;
+    }
+
+    header h2 {
+        font-size: 1.8rem;
+    }
+
+    header > a:not(:first-of-type) {
+        position: relative;
+        padding-bottom: 2px;
+    }
+
+        header > a:not(:first-of-type):hover {
+            color: #58A1DD;
+        }
+
+        header > a:not(:first-of-type)::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background-color: #58A1DD;
+            transition: width 0.2s ease;
+            border-radius: 10px;
+        }
+
+        header > a:not(:first-of-type):hover::after {
+            width: 100%;
+        }
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

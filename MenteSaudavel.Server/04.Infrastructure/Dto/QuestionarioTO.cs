@@ -13,7 +13,7 @@ namespace MenteSaudavel.Server._04.Infrastructure.Dto
 
         public Estratificacao? Estratificacao { get; set; }
 
-        public DateTime? DataEnvio { get; set; }
+        public string? DataEnvio { get; set; }
 
         public List<RespostaTO> ListaRespostas { get; set; }
     }

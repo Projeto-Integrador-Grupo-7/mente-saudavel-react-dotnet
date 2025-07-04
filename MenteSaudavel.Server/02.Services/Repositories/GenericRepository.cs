@@ -23,9 +23,9 @@ namespace MenteSaudavel.Server._02.Services.Repositories
             return _context.Set<TEntity>().AsQueryable();
         }
 
-        public virtual TEntity? GetById(Guid id)
+        public async virtual Task<TEntity?> GetById(Guid id)
         {
-            return _context.Find<TEntity>(id);
+            return await _context.FindAsync<TEntity>(id);
         }
 
         public virtual void Add(TEntity entity)

@@ -1,10 +1,44 @@
+import './Dashboard.css'
 import { useState, useEffect } from 'react';
-import PieChart from '../../components/PieChart';
+import PieChart from '../../components/PieChart/PieChart';
+import Table from '../../components/Table/Table';
 import api from '../../services/api';
 
 const Dashboard = () => {
     const [pieChartLabels, setPieChartLabels] = useState([]);
     const [pieChartValues, setPieChartValues] = useState([]);
+    const [tableData, setTableData] = useState([]);
+    const colunas = [
+        { header: 'Número', accessor: 'Numero' },
+        { header: 'Estratificação', accessor: 'Estratificacao' },
+        { header: 'Pontuação', accessor: 'Pontuacao' },
+        { header: 'Data de Envio', accessor: 'DataEnvio' }
+    ];
+
+    const getTableData = async () => {
+        try {
+            const response = await api.post('dashboard/historico', '5713002A-AB95-40FA-B56B-69A806D5BBDF', {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.data) {
+                let count = 0;
+
+                const dados = response.data.map(item =>
+                ({
+                    Numero: count += 1,
+                    Estratificacao: item.estratificacao.descricao,
+                    Pontuacao: item.pontuacao,
+                    DataEnvio: item.dataEnvio
+                }))
+
+                setTableData(dados);
+            }
+        }
+        catch (error) {
+
+        }
+    };
 
     const getPieChartData = async () => {
         try {
@@ -21,20 +55,24 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        getTableData();
         getPieChartData();
     }, []);
 
     return (
-        <div style={{ height: '100vh', width: '100vw' }}>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <PieChart
-                    title="Usuários por Estratificação"
-                    labels={pieChartLabels}
-                    tooltipLabel="Usuários"
-                    dataValues={ pieChartValues }
-                    colors={['#36A2EB', '#56FF7B', '#FFCE56', '#FF6384']}
-                />
-            </div>
+        <div className='container'>
+            <Table
+                title="Questionários Respondidos"
+                columns={colunas}
+                data={tableData}
+            />
+            <PieChart
+                title="Usuários por Estratificação"
+                labels={pieChartLabels}
+                tooltipLabel="Usuários"
+                dataValues={pieChartValues}
+                colors={['#36A2EB', '#56FF7B', '#FFCE56', '#FF6384']}
+            />
         </div>
     );
 }

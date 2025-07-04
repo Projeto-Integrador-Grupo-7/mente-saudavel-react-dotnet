@@ -1,9 +1,11 @@
+import './usuario.css';
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Input from '../../components/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PasswordVerification from '../../components/PasswordVerification';
+import api from '../../services/api';
 
 const Cadastro = () => {
     const [nome, setNome] = useState('');
@@ -12,8 +14,9 @@ const Cadastro = () => {
     const [dataNascimento, setDataNascimento] = useState('');
     const [sexo, setSexo] = useState('');
     const [senhaValida, setSenhaValida] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!senhaValida) {
             alert('A senha não está conforme as regras.');
@@ -23,22 +26,24 @@ const Cadastro = () => {
             alert('Preencha todos os campos!');
             return;
         }
-        const data = { nome, email, senha, dataNascimento, sexo };
-        fetch('https://localhost:5021/api/usuarios', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        })
-        .then(async response => {
-            if (!response.ok) {
-                alert(`Erro ao cadastrar! Código: ${response.status}`);
+
+        const dados = { nome, email, senha, dataNascimento, sexo };
+
+        try {
+            const response = await api.post('usuarios', dados);
+
+            if (response.status == 400) {
+                alert('Erro ao cadastrar: ' + response.data.mensagem);
                 return;
             }
+            
             alert('Cadastro com sucesso!');
-        })
-        .catch(error => {
-            alert('Erro ao cadastrar! ' + error);
-        });
+            navigate('/login');
+        }
+        catch (error) {
+            let response = error.response.data;
+            alert('Erro ao cadastrar: ' + response.mensagem + '\n\nDetalhes: ' + response.detalhes);
+        }
     };
 
     return (
@@ -60,15 +65,15 @@ const Cadastro = () => {
                             <Input id="dataNascimento" type='date' value={dataNascimento} onChange={e => setDataNascimento(e.target.value)} />
                             <select className="input" value={sexo} onChange={e => setSexo(e.target.value)}>
                                 <option value="" disabled hidden>Sexo</option>
-                                <option value="feminino">Feminino</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="nao_dizer">Prefiro não dizer</option>
+                                <option value="F">Feminino</option>
+                                <option value="M">Masculino</option>
+                                <option value="O">Outro</option>
                             </select>
                         </div>
                     </div>
 
                     <div className='pagefooter'>
-                        <Link to={'/'}>
+                        <Link to={'/login'}>
                             <Button secondary>Já possuo uma conta</Button>
                         </Link>
                         <Button primary type='submit'>Cadastrar</Button>

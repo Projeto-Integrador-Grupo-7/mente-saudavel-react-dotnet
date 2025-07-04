@@ -32,6 +32,7 @@ namespace MenteSaudavel.Server
 
             services.AddTransient<DataBaseContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUsuarioService, UsuarioService>();
             services.AddTransient<IQuestionarioService, QuestionarioService>();
         }

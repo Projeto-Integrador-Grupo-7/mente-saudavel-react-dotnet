@@ -1,3 +1,4 @@
+import './PieChart.css';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -46,8 +47,8 @@ const PieChart = ({ title = 'Gráfico de Pizza', labels = ['Sem dados'], tooltip
     };
 
     return (
-        <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
-            <h2 style={{ textAlign: 'center' }}>{title}</h2>
+        <div className='piechart-container'>
+            <h2>{title}</h2>
             <Pie data={data} options={options} />
         </div>
     );

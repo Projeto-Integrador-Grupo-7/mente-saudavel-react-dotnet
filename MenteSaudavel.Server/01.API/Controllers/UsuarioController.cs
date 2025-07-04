@@ -1,6 +1,8 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
+using MenteSaudavel.Server._02.Services.Services;
 using MenteSaudavel.Server._03.Data.ValueObjects;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
+using MenteSaudavel.Server._04.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
@@ -9,10 +11,12 @@ namespace MenteSaudavel.Server._01.API.Controllers
     [Route("api/usuarios")]
     public class UsuarioController : ControllerBase
     {
+        private readonly ITokenService _tokenService;
         private readonly IUsuarioService _usuarioService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(ITokenService tokenService, IUsuarioService usuarioService)
         {
+            _tokenService = tokenService;
             _usuarioService = usuarioService;
         }
 
@@ -29,7 +33,18 @@ namespace MenteSaudavel.Server._01.API.Controllers
 
                 UsuarioTO usuario = await _usuarioService.ValidarLogin(usuarioTO);
 
+                _tokenService.GenerateToken(ref usuario);
+
+                if (string.IsNullOrEmpty(usuario.Token))
+                {
+                    throw new TokenException("O servidor não conseguiu gerar o token de autenticação. Por favor, contate o administrador do sistema.");
+                }
+
                 return Ok(usuario);
+            }
+            catch (TokenException ex)
+            {
+                return Unauthorized(new { Mensagem = "Falha ao gerar token de autenticação.", Detalhes = ex.Message });
             }
             catch (ArgumentException ex)
             {
@@ -42,11 +57,11 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsuariosAsync()
+        public async Task<IActionResult> GetUsuarios()
         {
             try
             {
-                List<UsuarioTO> listaUsuario = await _usuarioService.GetUsuariosAsync();
+                List<UsuarioTO> listaUsuario = await _usuarioService.GetUsuarios();
 
                 if (!listaUsuario.Any())
                 {
@@ -62,21 +77,33 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarUsuarioAsync(UsuarioTO usuarioTO)
+        public async Task<IActionResult> CriarUsuario([FromBody] Dictionary<string, string> dados)
         {
             try
             {
-                usuarioTO = await _usuarioService.CriarUsuarioAsync(usuarioTO);
+                string dataNascimento = dados["dataNascimento"];
+                string[] arrayDataNascimento = dataNascimento.Split('-');
+
+                UsuarioTO usuarioTO = new UsuarioTO
+                {
+                    Nome = dados["nome"],
+                    Email = new Email(dados["email"]),
+                    Senha = dados["senha"],
+                    DataNascimento = new DateOnly(int.Parse(arrayDataNascimento[0]), int.Parse(arrayDataNascimento[1]), int.Parse(arrayDataNascimento[2])),
+                    Genero = new Genero(char.Parse(dados["sexo"]))
+                };
+
+                usuarioTO = await _usuarioService.CriarUsuario(usuarioTO);
 
                 return Ok(usuarioTO);
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { Mensagem = ex.Message });
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao cadastrar o usuário.");
+                return StatusCode(500, new { Mensagem = "Ocorreu um erro ao tentar cadastrar o usuário.", Detalhes = ex.Message });
             }
         }
     }   

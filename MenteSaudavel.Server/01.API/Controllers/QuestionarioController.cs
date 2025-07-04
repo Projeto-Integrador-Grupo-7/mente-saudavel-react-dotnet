@@ -1,11 +1,13 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
 {
     [ApiController]
     [Route("api/questionarios")]
+    //[Authorize]
     public class QuestionarioController : ControllerBase
     {
         private readonly IQuestionarioService _questionarioService;
@@ -16,11 +18,11 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarQuestionarioAsync(QuestionarioTO questionarioTO)
+        public async Task<IActionResult> CriarQuestionario(QuestionarioTO questionarioTO)
         {
             try
             {
-                questionarioTO = await _questionarioService.CriarQuestionarioAsync(questionarioTO);
+                questionarioTO = await _questionarioService.CriarQuestionario(questionarioTO);
 
                 return Ok(questionarioTO);
             }

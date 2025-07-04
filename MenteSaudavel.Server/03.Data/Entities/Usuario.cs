@@ -65,8 +65,6 @@ namespace MenteSaudavel.Server._03.Data.Entities
 
         public Genero Genero { get; set; }
 
-        public bool IsAdmin { get; set; }
-
         public List<Questionario> Questionarios { get; private set; } = new List<Questionario>();
         #endregion
 
@@ -80,7 +78,6 @@ namespace MenteSaudavel.Server._03.Data.Entities
             Senha = usuarioTO.Senha;
             DataNascimento = usuarioTO.DataNascimento;
             Genero = usuarioTO.Genero;
-            IsAdmin = false;
         }
         #endregion
 
@@ -98,8 +95,7 @@ namespace MenteSaudavel.Server._03.Data.Entities
                 Nome = Nome,
                 Email = Email,
                 DataNascimento = DataNascimento,
-                Genero = Genero,
-                IsAdmin = IsAdmin
+                Genero = Genero
             };
         }
         #endregion
