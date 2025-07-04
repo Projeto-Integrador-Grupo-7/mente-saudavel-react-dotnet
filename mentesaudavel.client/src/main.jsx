@@ -1,12 +1,12 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 import './index.css';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 import App from './App';
 import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home/Home';
@@ -24,11 +24,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home />,
+                element: <ProtectedRoute><Home /></ProtectedRoute>,
             },
             {
                 path: '/home',
-                element: <Home />,
+                element: <ProtectedRoute><Home /></ProtectedRoute>,
             },
             {
                 path: '/cadastro',
@@ -39,16 +39,16 @@ const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: '/dashboard',
-                element: <Dashboard />
-            },
-             {
                 path: '/questionario',
-                element: <Questionario />
+                element: <ProtectedRoute><Questionario /></ProtectedRoute>,
             },
             {
                 path: '/resultado',
-                element: <Resultado />
+                element: <ProtectedRoute><Resultado /></ProtectedRoute>,
+            },
+            {
+                path: '/dashboard',
+                element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
             }
         ]
     }
@@ -58,7 +58,7 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
     createRoot(rootElement).render(
         <StrictMode>
-            <RouterProvider router = { router } />
+            <RouterProvider router={router} />
         </StrictMode>
     );
 }
