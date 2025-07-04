@@ -109,5 +109,3 @@ const Resultado = ({ pontuacao }) => {
 };
 
 export default Resultado;
-
-

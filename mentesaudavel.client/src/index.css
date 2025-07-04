@@ -18,17 +18,13 @@
 
 a {
     font-weight: 500;
-    color: #14558B;
-    text-decoration: none;
+    color: #14558B !important;
+    text-decoration: none !important;
 }
 
     a:hover {
-        color: #58A1DD;
+        color: #58A1DD !important;
     }
-
-body {
-  
-}
 
 h1 {
     font-size: 3.2em;

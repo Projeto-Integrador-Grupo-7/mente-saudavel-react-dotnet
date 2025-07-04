@@ -32,6 +32,7 @@ const Login = () => {
             if (response.status == 200) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('usuarioId', response.data.usuarioId);
+                localStorage.setItem("nome", response.data.nome);
                 navigate('/home');
                 return;
             }

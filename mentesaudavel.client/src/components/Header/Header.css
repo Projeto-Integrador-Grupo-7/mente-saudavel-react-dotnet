@@ -45,3 +45,11 @@ header {
     align-items: center;
     gap: 5px;
 }
+
+.user-menu {
+    margin-left: auto;
+}
+
+    .user-menu button {
+        color: #14558B;
+    }

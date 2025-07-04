@@ -62,7 +62,7 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='dashboard-container'>
             <Table
                 title="Questionários Respondidos"
                 columns={colunas}
