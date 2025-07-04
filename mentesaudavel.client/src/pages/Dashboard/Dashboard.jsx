@@ -9,7 +9,7 @@ const Dashboard = () => {
     const [pieChartValues, setPieChartValues] = useState([]);
     const [tableData, setTableData] = useState([]);
     const colunas = [
-        { header: 'Número', accessor: 'Numero' },
+        { header: '#', accessor: 'Numero' },
         { header: 'Estratificação', accessor: 'Estratificacao' },
         { header: 'Pontuação', accessor: 'Pontuacao' },
         { header: 'Data de Envio', accessor: 'DataEnvio' }
@@ -17,7 +17,9 @@ const Dashboard = () => {
 
     const getTableData = async () => {
         try {
-            const response = await api.post('dashboard/historico', '5713002A-AB95-40FA-B56B-69A806D5BBDF', {
+
+            const usuarioId = localStorage.getItem('usuarioId');
+            const response = await api.post('dashboard/historico', usuarioId, {
                 headers: { 'Content-Type': 'application/json' }
             });
 

@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/questionarios")]
-    //[Authorize]
     public class QuestionarioController : ControllerBase
     {
         private readonly IQuestionarioService _questionarioService;

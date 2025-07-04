@@ -29,13 +29,14 @@ const Login = () => {
 
             const response = await api.post('usuarios/login', dados);
 
-            if (response.status == 400) {
-                alert('Erro ao fazer login: ' + response.data.mensagem);
+            if (response.status == 200) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('usuarioId', response.data.usuarioId);
+                navigate('/home');
                 return;
             }
 
-            alert('Login realizado com sucesso!');
-            navigate('/home');
+            alert('Erro ao fazer login: ' + response.data.mensagem);
         }
         catch (error) {
             let response = error.response.data;

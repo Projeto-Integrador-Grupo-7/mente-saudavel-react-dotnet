@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MenteSaudavel.Server._01.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/dashboard")]
-    //[Authorize]
     public class DashboardController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
@@ -27,13 +27,41 @@ namespace MenteSaudavel.Server._01.API.Controllers
         {
             try
             {
-                List<QuestionarioTO> listaQuestionariosRespondidos = new List<QuestionarioTO> 
+                List<QuestionarioTO> listaQuestionariosRespondidos = new List<QuestionarioTO>
                 {
                     new QuestionarioTO
                     {
                         Id = Guid.NewGuid(),
-                        Estratificacao = new Estratificacao(15),
-                        Pontuacao = 15,
+                        Estratificacao = new Estratificacao(10),
+                        Pontuacao = 10,
+                        DataEnvio = DateTime.Now.AddDays(-8).GetDataHorario()
+                    },
+                    new QuestionarioTO
+                    {
+                        Id = Guid.NewGuid(),
+                        Estratificacao = new Estratificacao(0),
+                        Pontuacao = 0,
+                        DataEnvio = DateTime.Now.AddDays(-1).GetDataHorario()
+                    },
+                    new QuestionarioTO
+                    {
+                        Id = Guid.NewGuid(),
+                        Estratificacao = new Estratificacao(20),
+                        Pontuacao = 20,
+                        DataEnvio = DateTime.Now.GetDataHorario()
+                    },
+                    new QuestionarioTO
+                    {
+                        Id = Guid.NewGuid(),
+                        Estratificacao = new Estratificacao(3),
+                        Pontuacao = 3,
+                        DataEnvio = DateTime.Now.AddDays(-5).GetDataHorario()
+                    },
+                    new QuestionarioTO
+                    {
+                        Id = Guid.NewGuid(),
+                        Estratificacao = new Estratificacao(1),
+                        Pontuacao = 1,
                         DataEnvio = DateTime.Now.AddDays(-10).GetDataHorario()
                     }
                 };

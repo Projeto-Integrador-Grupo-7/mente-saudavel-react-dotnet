@@ -28,7 +28,9 @@ namespace MenteSaudavel.Server._02.Services.Services
             {
                 Subject = GenerateClaims(usuarioTO),
                 SigningCredentials = credentials,
-                Expires = DateTime.UtcNow.AddHours(5)
+                Expires = DateTime.UtcNow.AddHours(5),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"]
             };
 
             SecurityToken token = handler.CreateToken(tokenDescriptor);

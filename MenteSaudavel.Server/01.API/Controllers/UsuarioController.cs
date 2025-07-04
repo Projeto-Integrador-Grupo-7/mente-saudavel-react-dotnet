@@ -1,5 +1,4 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
-using MenteSaudavel.Server._02.Services.Services;
 using MenteSaudavel.Server._03.Data.ValueObjects;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
 using MenteSaudavel.Server._04.Infrastructure.Exceptions;
