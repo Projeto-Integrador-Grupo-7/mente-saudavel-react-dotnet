@@ -1,5 +1,3 @@
-using MenteSaudavel.Server._03.Data.Entities;
-
 namespace MenteSaudavel.Server._04.Infrastructure.Dto
 {
     public class RespostaTO

@@ -18,10 +18,22 @@ namespace MenteSaudavel.Server._01.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarQuestionario(QuestionarioTO questionarioTO)
+        public async Task<IActionResult> CriarQuestionario([FromBody] QuestionarioRequestTO requestTO)
         {
             try
             {
+                List<RespostaTO> listaRespostasTO = requestTO.Respostas.Select(x => new RespostaTO
+                {
+                    Numero = int.Parse(x.Key.Substring(1)),
+                    Valor = x.Value
+                }).ToList();
+
+                QuestionarioTO questionarioTO = new QuestionarioTO
+                {
+                    RespondenteId = requestTO.UsuarioId,
+                    ListaRespostas = listaRespostasTO
+                };
+
                 questionarioTO = await _questionarioService.CriarQuestionario(questionarioTO);
 
                 return Ok(questionarioTO);

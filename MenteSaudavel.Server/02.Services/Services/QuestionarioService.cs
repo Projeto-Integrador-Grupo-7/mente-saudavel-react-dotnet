@@ -30,9 +30,8 @@ namespace MenteSaudavel.Server._02.Services.Services
 
             await _unitOfWork.SaveChangesAsync();
 
-            questionarioTO.Id = questionario.Id;
-            questionarioTO.DataEnvio = questionario.DataEnvio.GetDataHorario();
-            questionarioTO.ListaRespostas = questionario.Respostas.Select(resposta => resposta.ToDto()).ToList();
+            questionarioTO.Pontuacao = questionario.Pontuacao;
+            questionarioTO.Estratificacao = questionario.Estratificacao;
 
             return questionarioTO;
         }
