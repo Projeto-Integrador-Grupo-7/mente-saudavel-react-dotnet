@@ -41,7 +41,7 @@ namespace MenteSaudavel.Server._02.Services.Migrations
 
                     b.HasIndex("RespondenteId");
 
-                    b.ToTable("Questionario");
+                    b.ToTable("Questionario", (string)null);
                 });
 
             modelBuilder.Entity("MenteSaudavel.Server._03.Data.Entities.Resposta", b =>
@@ -62,7 +62,7 @@ namespace MenteSaudavel.Server._02.Services.Migrations
 
                     b.HasIndex("QuestionarioId");
 
-                    b.ToTable("Resposta");
+                    b.ToTable("Resposta", (string)null);
                 });
 
             modelBuilder.Entity("MenteSaudavel.Server._03.Data.Entities.Usuario", b =>
@@ -105,7 +105,7 @@ namespace MenteSaudavel.Server._02.Services.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Usuario", (string)null);
                 });
 
             modelBuilder.Entity("MenteSaudavel.Server._03.Data.Entities.Questionario", b =>
@@ -127,7 +127,7 @@ namespace MenteSaudavel.Server._02.Services.Migrations
 
                             b1.HasKey("QuestionarioId");
 
-                            b1.ToTable("Questionario");
+                            b1.ToTable("Questionario", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("QuestionarioId");

@@ -6,5 +6,7 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Repositories
     public interface IUsuarioRepository : IRepository<Usuario>
     {
         Task<Usuario?> GetUsuarioByEmailESenha(UsuarioTO usuarioTO);
+
+        Task<Usuario?> GetUsuarioComQuestionarios(Guid usuarioId);
     }
 }

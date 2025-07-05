@@ -49,16 +49,19 @@ namespace MenteSaudavel.Server._02.Services.Services
 
         public async Task<List<QuestionarioTO>> GetHistoricoByUsuarioId(Guid usuarioId)
         {
-            Usuario? usuario = await _unitOfWork.UsuarioRepository.GetById(usuarioId);
+            Usuario? usuario = await _unitOfWork.UsuarioRepository.GetUsuarioComQuestionarios(usuarioId);
 
             if (usuario is null)
             {
                 throw new ArgumentException("Usuário não encontrado.");
             }
 
-           // List<QuestionarioTO> listaQuestionariosRespondidos = usuario.Questionarios.Select(questionario => questionario.ToDto());
+           List<QuestionarioTO> listaQuestionariosRespondidos = usuario.Questionarios
+                .OrderByDescending(questionario => questionario.DataEnvio)
+                .Select(questionario => questionario.ToDto())
+                .ToList();
 
-            return new List<QuestionarioTO>();
+            return listaQuestionariosRespondidos;
         }
     }
 }

@@ -18,5 +18,12 @@ namespace MenteSaudavel.Server._02.Services.Repositories
                 usuario.Senha == usuarioTO.Senha)
                 .SingleOrDefaultAsync();
         }
+
+        public Task<Usuario?> GetUsuarioComQuestionarios(Guid usuarioId)
+        {
+            return Find(usuario => usuario.Id == usuarioId)
+                .Include(usuario => usuario.Questionarios)
+                .SingleOrDefaultAsync();
+        }
     }
 }

@@ -1,4 +1,6 @@
 using MenteSaudavel.Server._03.Data.ValueObjects;
+using MenteSaudavel.Server._04.Infrastructure.Dto;
+using MenteSaudavel.Server._04.Infrastructure.Extensions;
 
 namespace MenteSaudavel.Server._03.Data.Entities
 {
@@ -61,6 +63,17 @@ namespace MenteSaudavel.Server._03.Data.Entities
             }
 
             Estratificacao = new Estratificacao(Pontuacao.Value);
+        }
+
+        public QuestionarioTO ToDto()
+        {
+            return new QuestionarioTO()
+            {
+                Id = Id,
+                Pontuacao = Pontuacao,
+                Estratificacao = Estratificacao,
+                DataEnvio = DataEnvio.GetDataHorario()
+            };
         }
         #endregion
 

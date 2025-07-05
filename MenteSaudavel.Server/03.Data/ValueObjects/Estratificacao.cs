@@ -6,8 +6,16 @@ namespace MenteSaudavel.Server._03.Data.ValueObjects
     public class Estratificacao
     {
         public int Valor { get; }
-        public string Descricao { get; }
-        
+
+        public string Descricao => Valor switch
+        {
+            0 => EnumEstratificacao.NaoIdentificado.GetDisplayName(),
+            1 => EnumEstratificacao.Leve.GetDisplayName(),
+            2 => EnumEstratificacao.Moderado.GetDisplayName(),
+            3 => EnumEstratificacao.Grave.GetDisplayName(),
+            _ => throw new ArgumentOutOfRangeException("Valor inválido.")
+        };
+
         internal Estratificacao() { }
 
         public Estratificacao(int pontuacao)
@@ -19,15 +27,6 @@ namespace MenteSaudavel.Server._03.Data.ValueObjects
                 >= 8 and <= 14 => EnumEstratificacao.Moderado.GetIntValue(),
                 >= 15 and <= 20 => EnumEstratificacao.Grave.GetIntValue(),
                 _ => throw new ArgumentOutOfRangeException(nameof(pontuacao), "Pontuação inválida.")
-            };
-
-            Descricao = Valor switch
-            {
-                0 => EnumEstratificacao.NaoIdentificado.GetDisplayName(),
-                1 => EnumEstratificacao.Leve.GetDisplayName(),
-                2 => EnumEstratificacao.Moderado.GetDisplayName(),
-                3 => EnumEstratificacao.Grave.GetDisplayName(),
-                _ => throw new ArgumentOutOfRangeException(nameof(pontuacao), "Valor inválido.")
             };
         }
 
