@@ -3,6 +3,7 @@ using MenteSaudavel.Server._03.Data.Entities;
 using MenteSaudavel.Server._04.Infrastructure.Dto;
 using MenteSaudavel.Server._04.Infrastructure.Enums;
 using MenteSaudavel.Server._04.Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace MenteSaudavel.Server._02.Services.Services
 {
@@ -46,11 +47,91 @@ namespace MenteSaudavel.Server._02.Services.Services
             }
         }
 
-        public async Task<Dictionary<string, int>> GetQtdeUsuariosPorEstratificacao()
+        public async Task<List<QuestionarioTO>> GetQuestionariosByUsuarioId(DashboardRequestTO requestTO)
         {
-            List<Questionario> listaQuestionarioMaisRecentePorUsuario = await _unitOfWork.QuestionarioRepository.GetUltimoQuestionarioRespondidoPorCadaUsuario();
+            IQueryable<Questionario> queryQuestionario = _unitOfWork.QuestionarioRepository.GetQuestionariosByUsuarioId(requestTO.UsuarioId.Value);
 
-            return GetQtdeUsuariosPorEstratificacao(listaQuestionarioMaisRecentePorUsuario);
+            bool deveFiltrar = 
+                requestTO.DataInicio.HasValue || 
+                requestTO.DataFim.HasValue;
+
+            if (deveFiltrar)
+            {
+                queryQuestionario = FiltrarPorData(queryQuestionario, requestTO.DataInicio, requestTO.DataFim);
+            }
+
+            List<QuestionarioTO> listaQuestionariosRespondidos = await queryQuestionario
+                 .OrderByDescending(questionario => questionario.DataEnvio)
+                 .Select(questionario => questionario.ToDto())
+                 .ToListAsync();
+
+            return listaQuestionariosRespondidos;
+        }
+
+        public async Task<Dictionary<string, int>> GetQtdeUsuariosPorEstratificacao(DashboardTO dashboardTO)
+        {
+            List<Questionario> listaQuestionarios;
+
+            bool deveFiltrar =
+                dashboardTO.DataInicio.HasValue ||
+                dashboardTO.DataFim.HasValue ||
+                dashboardTO.Genero is not null ||
+                dashboardTO.Idade.HasValue;
+
+            if (deveFiltrar)
+            {
+                listaQuestionarios = await GetListaQuestionariosFiltrada(dashboardTO);
+            }
+            else
+            {
+                listaQuestionarios = await _unitOfWork.QuestionarioRepository.GetUltimoQuestionarioRespondidoPorCadaUsuario();
+            }
+
+            return GetQtdeUsuariosPorEstratificacao(listaQuestionarios);
+        }
+
+        private async Task<List<Questionario>> GetListaQuestionariosFiltrada(DashboardTO dashboardTO)
+        {
+            IQueryable<Questionario> queryQuestionarios = _unitOfWork.QuestionarioRepository.GetAll();
+
+            queryQuestionarios = FiltrarPorData(queryQuestionarios, dashboardTO.DataInicio, dashboardTO.DataFim);
+
+            if (dashboardTO.Genero is not null)
+            {
+                queryQuestionarios = queryQuestionarios.Where(questionario => questionario.Respondente.Genero.Valor == dashboardTO.Genero.Valor);
+            }
+
+            if (dashboardTO.Idade.HasValue)
+            {
+                var hoje = DateTime.Today;
+                var idade = dashboardTO.Idade.Value;
+
+                var dataNascimentoMin = DateOnly.FromDateTime(hoje.AddYears(-idade - 1).AddDays(1));
+                var dataNascimentoMax = DateOnly.FromDateTime(hoje.AddYears(-idade));
+
+                queryQuestionarios = queryQuestionarios.Where(questionario =>
+                    questionario.Respondente.DataNascimento >= dataNascimentoMin &&
+                    questionario.Respondente.DataNascimento <= dataNascimentoMax);
+            }
+
+            return await queryQuestionarios.ToListAsync();
+        }
+
+        private IQueryable<Questionario> FiltrarPorData(IQueryable<Questionario> queryQuestionarios, DateTime? dataInicio, DateTime? dataFim)
+        {
+            if (dataInicio.HasValue)
+            {
+                queryQuestionarios = queryQuestionarios.Where(questionario => questionario.DataEnvio >= dataInicio);
+            }
+
+            if (dataFim.HasValue)
+            {
+                DateTime diaPosterior = dataFim.Value.AddDays(1);
+
+                queryQuestionarios = queryQuestionarios.Where(questionario => questionario.DataEnvio < diaPosterior);
+            }
+
+            return queryQuestionarios;
         }
 
         private Dictionary<string, int> GetQtdeUsuariosPorEstratificacao(List<Questionario> listaQuestionario)

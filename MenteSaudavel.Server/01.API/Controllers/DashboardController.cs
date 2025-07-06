@@ -10,26 +10,19 @@ namespace MenteSaudavel.Server._01.API.Controllers
     [Route("api/dashboard")]
     public class DashboardController : ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
         private readonly IQuestionarioService _questionarioService;
 
-        public DashboardController(IUsuarioService usuarioService, IQuestionarioService questionarioService)
+        public DashboardController(IQuestionarioService questionarioService)
         {
-            _usuarioService = usuarioService;
             _questionarioService = questionarioService;
         }
 
         [HttpPost("historico")]
-        public async Task<IActionResult> GetQuestionariosRespondidosByUsuarioId([FromBody] Guid usuarioId)
+        public async Task<IActionResult> GetQuestionariosRespondidosByUsuarioId([FromBody] DashboardRequestTO requestTO)
         {
             try
             {
-                List<QuestionarioTO> listaQuestionariosRespondidos = await _usuarioService.GetHistoricoByUsuarioId(usuarioId);
-
-                if (!listaQuestionariosRespondidos.Any())
-                {
-                    return NotFound("Você ainda não respondeu nenhum questionário.");
-                }
+                List<QuestionarioTO> listaQuestionariosRespondidos = await _questionarioService.GetQuestionariosByUsuarioId(requestTO);
 
                 return Ok(listaQuestionariosRespondidos);
             }
@@ -39,17 +32,14 @@ namespace MenteSaudavel.Server._01.API.Controllers
             }
         }
 
-        [HttpGet("graficoPizza")]
-        public async Task<IActionResult> GetQtdeUsuariosPorEstratificacao()
+        [HttpPost("graficoPizza")]
+        public async Task<IActionResult> GetQtdeUsuariosPorEstratificacao([FromBody] DashboardRequestTO requestTO)
         {
             try
             {
-                Dictionary<string, int> qtdeUsuariosPorEstratificacao = await _questionarioService.GetQtdeUsuariosPorEstratificacao();
+                DashboardTO dashboardTO = (DashboardTO)requestTO;
 
-                if (!qtdeUsuariosPorEstratificacao.Any())
-                {
-                    return NotFound("Nenhum questionário foi respondido ainda.");
-                }
+                Dictionary<string, int> qtdeUsuariosPorEstratificacao = await _questionarioService.GetQtdeUsuariosPorEstratificacao(dashboardTO);
 
                 return Ok(qtdeUsuariosPorEstratificacao);
             }

@@ -17,5 +17,10 @@ namespace MenteSaudavel.Server._02.Services.Repositories
                 .Select(g => g.OrderByDescending(q => q.DataEnvio).First())
                 .ToListAsync();
         }
+
+        public IQueryable<Questionario> GetQuestionariosByUsuarioId(Guid usuarioId)
+        {
+            return Find(questionario => questionario.Respondente.Id == usuarioId);
+        }
     }
 }

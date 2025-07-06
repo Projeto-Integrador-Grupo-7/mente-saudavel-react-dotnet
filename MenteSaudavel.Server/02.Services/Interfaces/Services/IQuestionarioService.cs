@@ -6,6 +6,8 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Services
     {
         Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO);
 
-        Task<Dictionary<string, int>> GetQtdeUsuariosPorEstratificacao();
+        Task<List<QuestionarioTO>> GetQuestionariosByUsuarioId(DashboardRequestTO requestTO);
+
+        Task<Dictionary<string, int>> GetQtdeUsuariosPorEstratificacao(DashboardTO dashboardTO);
     }
 }

@@ -42,7 +42,7 @@ namespace MenteSaudavel.Server._01.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Ocorreu um erro ao submeter o questionário.");
             }

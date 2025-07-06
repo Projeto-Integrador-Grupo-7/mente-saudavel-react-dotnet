@@ -9,7 +9,5 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Services
         Task<List<UsuarioTO>> GetUsuarios();
 
         Task<UsuarioTO> CriarUsuario(UsuarioTO usuarioTO);
-
-        Task<List<QuestionarioTO>> GetHistoricoByUsuarioId(Guid usuarioId);
     }
 }
