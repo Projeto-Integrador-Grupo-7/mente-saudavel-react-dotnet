@@ -16,6 +16,18 @@ namespace MenteSaudavel.Server._02.Services.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<QuestionarioTO> GetQuestionario(Guid questionarioId)
+        {
+            Questionario? questionario = await _unitOfWork.QuestionarioRepository.GetQuestionarioComRespostas(questionarioId);
+
+            if (questionario is null)
+            {
+                throw new ArgumentException("Questionário não encontrado.");
+            }
+
+            return questionario.ToDto();
+        }
+
         public async Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO)
         {
             Usuario? respondente = await _unitOfWork.UsuarioRepository.GetById(questionarioTO.RespondenteId);

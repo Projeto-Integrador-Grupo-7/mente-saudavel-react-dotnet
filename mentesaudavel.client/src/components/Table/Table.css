@@ -23,3 +23,8 @@ tbody td {
 .no-data {
     text-align: center;
 }
+
+td .btn {
+    background-color: #14558B !important;
+    color: white !important;
+}

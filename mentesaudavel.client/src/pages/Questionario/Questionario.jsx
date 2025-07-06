@@ -1,6 +1,6 @@
 import './Questionario.css';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 
 const perguntas = [
@@ -30,6 +30,19 @@ const Questionario = () => {
     const [formData, setFormData] = useState({});
     const [mensagem, setMensagem] = useState('');
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    const getQuestionario = async () => {
+        const response = await api.get(`questionarios/${id}`);
+        const dados = {};
+
+        const listaResposta = response.data.listaRespostas;
+        listaResposta.forEach(resposta => {
+            dados[`r${resposta.numero}`] = resposta.valor
+        })
+
+        setFormData(dados);
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,6 +94,14 @@ const Questionario = () => {
         }
     };
 
+    useEffect(() => {
+        if (!id) {
+            return;
+        }
+
+        getQuestionario();
+    }, []);
+
     return (
         <div className="container mt-5 d-flex justify-content-center">
             <div style={{ maxWidth: '700px', width: '100%' }}>
@@ -100,6 +121,8 @@ const Questionario = () => {
                                             id={`r${numero}-sim`}
                                             value={true}
                                             required
+                                            checked={formData[`r${numero}`] === true}
+                                            disabled={id}
                                             onChange={handleChange}
                                         />
                                         <label className="form-check-label" htmlFor={`r${numero}-sim`}>
@@ -113,6 +136,8 @@ const Questionario = () => {
                                             name={`r${numero}`}
                                             id={`r${numero}-nao`}
                                             value={false}
+                                            checked={formData[`r${numero}`] === false}
+                                            disabled={id}
                                             onChange={handleChange}
                                         />
                                         <label className="form-check-label" htmlFor={`r${numero}-nao`}>
@@ -124,9 +149,11 @@ const Questionario = () => {
                         })}
                     </div>
 
-                    <div className="d-flex justify-content-between mt-4">
-                        <button type="submit" className="btn btn-primary btnEnviarQuestionario">Enviar</button>
-                    </div>
+                    {!id && 
+                        <div className="d-flex justify-content-between mt-4">
+                            <button type="submit" className="btn btn-primary btnEnviarQuestionario">Enviar</button>
+                        </div>    
+                    }
 
                     {mensagem && <div className="alert alert-info mt-3">{mensagem}</div>}
                 </form>

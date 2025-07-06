@@ -67,13 +67,23 @@ namespace MenteSaudavel.Server._03.Data.Entities
 
         public QuestionarioTO ToDto()
         {
-            return new QuestionarioTO()
+            QuestionarioTO questionarioTO = new QuestionarioTO()
             {
                 Id = Id,
                 Pontuacao = Pontuacao,
                 Estratificacao = Estratificacao,
                 DataEnvio = DataEnvio.GetDataHorario()
             };
+
+            if (Respostas.Any())
+            {
+                questionarioTO.ListaRespostas = Respostas
+                    .OrderBy(resposta => resposta.Numero)
+                    .Select(resposta => resposta.ToDto())
+                    .ToList();
+            }
+
+            return questionarioTO;
         }
         #endregion
 

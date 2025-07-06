@@ -10,6 +10,13 @@ namespace MenteSaudavel.Server._02.Services.Repositories
         {
         }
 
+        public async Task<Questionario?> GetQuestionarioComRespostas(Guid questionarioId)
+        {
+            return await Find(questionario => questionario.Id == questionarioId)
+                .Include(questionario => questionario.Respostas)
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<List<Questionario>> GetUltimoQuestionarioRespondidoPorCadaUsuario()
         {
             return await GetAll()

@@ -17,6 +17,25 @@ namespace MenteSaudavel.Server._01.API.Controllers
             _questionarioService = questionarioService;
         }
 
+        [HttpGet("{questionarioId:Guid}")]
+        public async Task<IActionResult> GetQuestionario(Guid questionarioId)
+        {
+            try
+            {
+                QuestionarioTO questionarioTO = await _questionarioService.GetQuestionario(questionarioId);
+
+                return Ok(questionarioTO);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch
+            {
+                return StatusCode(500, "Ocorreu um erro ao submeter o questionário.");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CriarQuestionario([FromBody] QuestionarioRequestTO requestTO)
         {
