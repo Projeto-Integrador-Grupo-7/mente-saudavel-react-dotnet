@@ -6,7 +6,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-const PieChart = ({ title = 'Gráfico de Pizza', labels = ['Sem dados'], tooltipLabel = 'Valores', dataValues = [1], colors = [] }) => {
+const PieChart = ({ title = 'Gráfico de Pizza', subtitle = 'Total: ', labels = ['Sem dados'], tooltipLabel = 'Valores', dataValues = [1], colors = [] }) => {
+    const total = dataValues.reduce((acc, val) => acc + val, 0);
+
     const data = {
         labels: labels,
         datasets: [
@@ -33,8 +35,7 @@ const PieChart = ({ title = 'Gráfico de Pizza', labels = ['Sem dados'], tooltip
             },
             datalabels: {
                 color: '#fff',
-                formatter: (value, context) => {
-                    const total = context.chart.data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+                formatter: (value) => {
                     const porcentagem = ((value / total) * 100).toFixed(1);
                     return porcentagem + '%';
                 },
@@ -49,6 +50,7 @@ const PieChart = ({ title = 'Gráfico de Pizza', labels = ['Sem dados'], tooltip
     return (
         <div className='piechart-container'>
             <h2>{title}</h2>
+            <h3 style={{ textAlign: 'center' }}>{subtitle}{total}</h3>
             <Pie data={data} options={options} />
         </div>
     );

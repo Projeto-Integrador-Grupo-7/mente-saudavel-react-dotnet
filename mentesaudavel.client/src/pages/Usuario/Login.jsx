@@ -63,7 +63,6 @@ const Login = () => {
                         <PasswordVerification
                             onPasswordChange={senha => setSenha(senha)}
                         />
-                        <Link to='/' className='recoverypassword'>esqueci a senha</Link>
                     </div>
                     <div className='pagefooter'>
                         <Link to={'/cadastro'}>

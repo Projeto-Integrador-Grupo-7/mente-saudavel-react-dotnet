@@ -25,7 +25,15 @@ const Resultado = () => {
         <section className="mt-5">
             <h1 className="mb-4 text-center">Seu resultado</h1>
 
-            <div className="slider-container text-center">
+            <div className="slider-container" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                margin: '20px 0',
+                width: '100%',
+                padding: '0 20px',
+                boxSizing: 'border-box'
+            }}>
                 <input
                     type="range"
                     min="0"
@@ -33,14 +41,31 @@ const Resultado = () => {
                     value={pontuacao}
                     className="slider"
                     id="feelingRange"
-                    disabled
+                    disabled={true}
+                    style={{
+                        WebkitAppearance: 'none',
+                        appearance: 'none',
+                        width: '100%',
+                        height: '8px',
+                        background: '#ddd',
+                        borderRadius: '5px',
+                        outline: 'none',
+                        opacity: '0.7',
+                        transition: 'opacity .2s',
+                        marginBottom: '15px',
+                    }}
                 />
-                <div className="emojis custom-emojis">
-                    <span role="img" aria-label="muito bem">😁</span>
-                    <span role="img" aria-label="bem">🙂</span>
-                    <span role="img" aria-label="neutro">😐</span>
-                    <span role="img" aria-label="triste">😢</span>
-                    <span role="img" aria-label="muito triste">😫</span>
+                <div className="emojis" style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    fontSize: '24px',
+                }}>
+                    <span>😁</span>
+                    <span>🙂</span>
+                    <span>😐</span>
+                    <span>😢</span>
+                    <span>😫</span>
                 </div>
             </div>
 

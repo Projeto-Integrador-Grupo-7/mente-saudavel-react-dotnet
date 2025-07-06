@@ -26,15 +26,6 @@ const perguntas = [
     'Tem sensações desagradáveis no estômago?'
 ];
 
-const toPascalCase = (obj) => {
-    const newObj = {};
-    for (const key in obj) {
-        const pascalKey = key.charAt(0).toUpperCase() + key.slice(1);
-        newObj[pascalKey] = obj[key];
-    }
-    return newObj;
-};
-
 const Questionario = () => {
     const [formData, setFormData] = useState({});
     const [mensagem, setMensagem] = useState('');
@@ -59,7 +50,6 @@ const Questionario = () => {
         e.preventDefault();
 
         try {
-            debugger;
             const usuarioId = localStorage.getItem('usuarioId');
 
             const dados = {
@@ -135,8 +125,7 @@ const Questionario = () => {
                     </div>
 
                     <div className="d-flex justify-content-between mt-4">
-                        <button type="submit" className="btn btn-primary">Enviar</button>
-                        <a href="/dashboard" className="btn btn-outline-secondary">Voltar para Dashboard</a>
+                        <button type="submit" className="btn btn-primary btnEnviarQuestionario">Enviar</button>
                     </div>
 
                     {mensagem && <div className="alert alert-info mt-3">{mensagem}</div>}

@@ -3,6 +3,23 @@ form {
     display: contents;
 }
 
+    form .cardprimary {
+        display: flex;
+        width: 100%;
+        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form .cardsecondary {
+        display: flex;
+        width: 100%;
+        gap: 15px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
 .page {
     display: flex;
     align-items: center;
@@ -12,58 +29,16 @@ form {
     background: linear-gradient(116deg, #F5FAFF 10.36%, #BDDEFA 106.14%);
 }
 
-.btn {
-    margin: 0.5rem;
-}
-
-.btn.primary {
-    border-radius: 15px;
-    background: #0BD2FF;
-    outline: none;
-}
-
-.btn.primary:hover {
-    border-color: #fff;
-}
-
-.btn.secondary {
-    border-radius: 15px;
-    border: 5px solid #0BD2FF;
-    background: transparent;
-    outline: none;
-}
-
-.btn.secondary:hover {
-    border-color: #fff;
-}
-
-.card {
-    display: flex;
-    min-width: 500px;
-    padding: 40px;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    border-radius: 20px;
-    background: #58A1DD;
-}
-
-.cardprimary {
-    display: flex;
-    width: 100%;
-    gap: 15px;
-    flex-direction: column;
-    align-items: center;
-}
-
-.cardsecondary {
-    display: flex;
-    width: 100%;
-    gap: 15px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
+    .page .card {
+        display: flex;
+        max-width: 40rem;
+        padding: 40px;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        border-radius: 20px;
+        background: #58A1DD;
+    }
 
 .input {
     display: flex;
@@ -78,24 +53,18 @@ form {
     color: #9b9b9b;
 }
 
-.input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(41%) sepia(99%) saturate(749%) hue-rotate(163deg) brightness(98%) contrast(101%);
-}
+    .input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(41%) sepia(99%) saturate(749%) hue-rotate(163deg) brightness(98%) contrast(101%);
+    }
 
-.input::placeholder {
-    color: #CACACA;
-}
+    .input::placeholder {
+        color: #CACACA;
+    }
 
-.input:focus-visible {
-    border: 2px solid #cacaca;
-    outline: 0;
-}
-
-.pagefooter {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
+    .input:focus-visible {
+        border: 2px solid #cacaca;
+        outline: 0;
+    }
 
 .recoverypassword {
     align-self: flex-start;
@@ -103,12 +72,12 @@ form {
     color: #fff;
 }
 
-.recoverypassword:hover {
-    border: none;
-    background-color: transparent;
-    text-decoration: underline;
-    color: #fff;
-}
+    .recoverypassword:hover {
+        border: none;
+        background-color: transparent;
+        text-decoration: underline;
+        color: #fff;
+    }
 
 .logo-title {
     display: flex;
@@ -144,3 +113,36 @@ form {
     margin-bottom: 8px;
     max-width: 320px;
 }
+
+.pagefooter {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+    .pagefooter .btn {
+        height: 3rem;
+        width: 12rem;
+        margin: 0.5rem;
+        background: #14558B;
+        color: white;
+    }
+
+        .pagefooter .btn.primary {
+            width: 8rem;
+            border-radius: 15px;
+            outline: none;
+        }
+
+            .pagefooter .btn.primary:hover {
+                border-color: #fff;
+            }
+
+        .pagefooter .btn.secondary {
+            border-radius: 15px;
+            outline: none;
+        }
+
+            .pagefooter .btn.secondary:hover {
+                border-color: #fff;
+            }

@@ -3,7 +3,7 @@ import React from 'react';
 
 const Table = ({ title = 'Tabela', columns = [], data = [] }) => {
     return (
-        <div style={{ overflowX: 'auto', width: '50rem' }}>
+        <div style={{ overflowX: 'auto', width: '50rem', marginTop: '6rem' }}>
             {title && <h2 className='table-title'>{title}</h2>}
             <table>
                 <thead>

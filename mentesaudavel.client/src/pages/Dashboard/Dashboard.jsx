@@ -69,7 +69,8 @@ const Dashboard = () => {
                 data={tableData}
             />
             <PieChart
-                title="Usuários por Estratificação"
+                title="Resultado Geral"
+                subtitle="Total Usuários: "
                 labels={pieChartLabels}
                 tooltipLabel="Usuários"
                 dataValues={pieChartValues}
