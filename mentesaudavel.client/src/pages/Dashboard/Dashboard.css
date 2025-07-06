@@ -39,3 +39,15 @@
         .filter-btn-container .btn:hover {
             background-color: #58A1DD;
         }
+
+.dashboard-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .dashboard-btn-container .btn {
+        background-color: #14558B;
+        color: white;
+    }

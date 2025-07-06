@@ -1,24 +1,28 @@
 import './Dashboard.css'
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PieChart from '../../components/PieChart/PieChart';
 import Table from '../../components/Table/Table';
 import api from '../../services/api';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+
+    const [dataInicio, setDataInicio] = useState('');
+    const [dataFim, setDataFim] = useState('');
+    const [genero, setGenero] = useState('Todos');
+    const [idade, setIdade] = useState('');
+
     const [pieChartLabels, setPieChartLabels] = useState([]);
     const [pieChartValues, setPieChartValues] = useState([]);
     const [tableData, setTableData] = useState([]);
+
     const colunas = [
         { header: '#', accessor: 'Numero' },
         { header: 'Estratificação', accessor: 'Estratificacao' },
         { header: 'Pontuação', accessor: 'Pontuacao' },
         { header: 'Data de Envio', accessor: 'DataEnvio' }
     ];
-
-    const [dataInicio, setDataInicio] = useState('');
-    const [dataFim, setDataFim] = useState('');
-    const [genero, setGenero] = useState('Todos');
-    const [idade, setIdade] = useState('');
 
     const limparFiltros = () => {
         setDataInicio('');
@@ -136,6 +140,10 @@ const Dashboard = () => {
                     dataValues={pieChartValues}
                     colors={['#36A2EB', '#56FF7B', '#FFCE56', '#FF6384']}
                 />
+            </div>
+
+            <div className="dashboard-btn-container">
+                <button className="btn" onClick={() => navigate(`/relatorio`)}>Ir para Relatório</button>
             </div>
         </div>
     );

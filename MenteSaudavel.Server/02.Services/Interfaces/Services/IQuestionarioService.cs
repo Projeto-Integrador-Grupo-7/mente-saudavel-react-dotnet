@@ -4,9 +4,11 @@ namespace MenteSaudavel.Server._02.Services.Interfaces.Services
 {
     public interface IQuestionarioService
     {
+        Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO);
+
         Task<QuestionarioTO> GetQuestionario(Guid questionarioId);
 
-        Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO);
+        Task<QuestionarioTO> GetUltimoQuestionarioRespondidoByUsuarioId(Guid usuarioId);
 
         Task<List<QuestionarioTO>> GetQuestionariosByUsuarioId(DashboardRequestTO requestTO);
 

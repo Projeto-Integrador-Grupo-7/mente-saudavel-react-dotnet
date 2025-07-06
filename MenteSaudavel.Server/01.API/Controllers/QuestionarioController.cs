@@ -66,5 +66,24 @@ namespace MenteSaudavel.Server._01.API.Controllers
                 return StatusCode(500, "Ocorreu um erro ao submeter o questionário.");
             }
         }
+
+        [HttpPost("relatorio")]
+        public async Task<IActionResult> GetUltimoQuestionarioRespondidoByUsuarioId([FromBody] Guid usuarioId)
+        {
+            try
+            {
+                QuestionarioTO ultimoQuestionarioRespondido = await _questionarioService.GetUltimoQuestionarioRespondidoByUsuarioId(usuarioId);
+
+                return Ok(ultimoQuestionarioRespondido);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch
+            {
+                return StatusCode(500, "Ocorreu um erro ao buscar o último questionário respondido.");
+            }
+        }
     }
 }

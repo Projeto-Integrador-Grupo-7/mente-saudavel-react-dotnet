@@ -15,6 +15,7 @@ import Login from './pages/Usuario/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Questionario from './pages/Questionario/Questionario';
 import Resultado from './pages/Resultado/Resultado';
+import Relatorio from './pages/Relatorio/Relatorio';
 
 const router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
+            },
+            {
+                path: '/relatorio',
+                element: <ProtectedRoute><Relatorio /></ProtectedRoute>,
             }
         ]
     }

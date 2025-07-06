@@ -16,18 +16,6 @@ namespace MenteSaudavel.Server._02.Services.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<QuestionarioTO> GetQuestionario(Guid questionarioId)
-        {
-            Questionario? questionario = await _unitOfWork.QuestionarioRepository.GetQuestionarioComRespostas(questionarioId);
-
-            if (questionario is null)
-            {
-                throw new ArgumentException("Questionário não encontrado.");
-            }
-
-            return questionario.ToDto();
-        }
-
         public async Task<QuestionarioTO> CriarQuestionario(QuestionarioTO questionarioTO)
         {
             Usuario? respondente = await _unitOfWork.UsuarioRepository.GetById(questionarioTO.RespondenteId);
@@ -59,12 +47,40 @@ namespace MenteSaudavel.Server._02.Services.Services
             }
         }
 
+        public async Task<QuestionarioTO> GetQuestionario(Guid questionarioId)
+        {
+            Questionario? questionario = await _unitOfWork.QuestionarioRepository.GetQuestionarioComRespostas(questionarioId);
+
+            if (questionario is null)
+            {
+                throw new ArgumentException("Questionário não encontrado.");
+            }
+
+            return questionario.ToDto();
+        }
+
+        public async Task<QuestionarioTO> GetUltimoQuestionarioRespondidoByUsuarioId(Guid usuarioId)
+        {
+            IQueryable<Questionario> queryQuestionario = _unitOfWork.QuestionarioRepository.GetQuestionariosByUsuarioId(usuarioId);
+
+            Questionario? ultimoQuestionarioRespondido = await queryQuestionario
+                 .OrderByDescending(questionario => questionario.DataEnvio)
+                 .FirstOrDefaultAsync();
+
+            if (ultimoQuestionarioRespondido is null)
+            {
+                throw new ArgumentException("Usuário ainda não respondeu nenhum questionário.");
+            }
+
+            return ultimoQuestionarioRespondido.ToDto();
+        }
+
         public async Task<List<QuestionarioTO>> GetQuestionariosByUsuarioId(DashboardRequestTO requestTO)
         {
             IQueryable<Questionario> queryQuestionario = _unitOfWork.QuestionarioRepository.GetQuestionariosByUsuarioId(requestTO.UsuarioId.Value);
 
-            bool deveFiltrar = 
-                requestTO.DataInicio.HasValue || 
+            bool deveFiltrar =
+                requestTO.DataInicio.HasValue ||
                 requestTO.DataFim.HasValue;
 
             if (deveFiltrar)
