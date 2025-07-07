@@ -47,7 +47,6 @@ const Resultado = () => {
                         appearance: 'none',
                         width: '100%',
                         height: '8px',
-                        background: '#ddd',
                         borderRadius: '5px',
                         outline: 'none',
                         opacity: '0.7',

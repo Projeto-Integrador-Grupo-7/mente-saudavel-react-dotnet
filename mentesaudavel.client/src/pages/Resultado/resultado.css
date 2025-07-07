@@ -51,4 +51,6 @@ section {
 
 .containerBtns button {
     min-width: 220px;
+    background-color: #14558B;
+    color: white;
 }
