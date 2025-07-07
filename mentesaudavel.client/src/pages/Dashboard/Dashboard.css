@@ -1,0 +1,53 @@
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 100%;
+    background-color: #fff;
+}
+
+.filter-master-container {
+    display: flex;
+    justify-content: center;
+    background-color: #f2f2f2;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .filter-master-container > div {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+    }
+
+.filter-fields-container {
+    display: flex;
+    gap: 2rem
+}
+
+.filter-btn-container {
+    display: flex;
+    gap: 3rem;
+}
+
+    .filter-btn-container .btn {
+        width: 8rem;
+        background-color: #14558B;
+        color: white;
+    }
+
+        .filter-btn-container .btn:hover {
+            background-color: #58A1DD;
+        }
+
+.dashboard-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .dashboard-btn-container .btn {
+        background-color: #14558B;
+        color: white;
+    }

@@ -1,12 +1,19 @@
-import { Outlet } from 'react-router-dom';
-import Header from './components/Header';
+import './App.css';
+import { Outlet, useLocation } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
+    const location = useLocation();
+    const hideNavigation = ["/login", "/cadastro"].includes(location.pathname.toLowerCase());
+
     return (
-        <div>
-            <Header />
-            <Outlet />
-            <footer></footer>
+        <div className="app-container">
+            {!hideNavigation && <Header />}
+            <main className="main-container">
+                <Outlet />
+            </main>
+            <Footer />
         </div>
     )
 }

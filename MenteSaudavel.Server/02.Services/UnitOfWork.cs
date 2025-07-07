@@ -1,4 +1,4 @@
-﻿using MenteSaudavel.Server._02.Services.Interfaces;
+using MenteSaudavel.Server._02.Services.Interfaces.Repositories;
 using MenteSaudavel.Server._02.Services.Repositories;
 
 namespace MenteSaudavel.Server._02.Services
@@ -8,7 +8,11 @@ namespace MenteSaudavel.Server._02.Services
     {
         public IUsuarioRepository UsuarioRepository { get; }
 
-        void SaveChanges();
+        public IQuestionarioRepository QuestionarioRepository { get; }
+
+        public IRespostaRepository RespostaRepository { get; }
+
+        Task SaveChangesAsync();
     }
     #endregion
 
@@ -18,6 +22,8 @@ namespace MenteSaudavel.Server._02.Services
         private readonly DataBaseContext _context;
         private bool _disposed = false;
         private IUsuarioRepository _usuarioRepository;
+        private IQuestionarioRepository _questionarioRepository;
+        private IRespostaRepository _respostaRepository;
         #endregion
 
         #region CONSTRUTOR
@@ -44,9 +50,9 @@ namespace MenteSaudavel.Server._02.Services
             GC.SuppressFinalize(this);
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public IUsuarioRepository UsuarioRepository
@@ -59,6 +65,32 @@ namespace MenteSaudavel.Server._02.Services
                 }
 
                 return _usuarioRepository;
+            }
+        }
+
+        public IQuestionarioRepository QuestionarioRepository
+        {
+            get
+            {
+                if (_questionarioRepository == null)
+                {
+                    _questionarioRepository = new QuestionarioRepository(_context);
+                }
+
+                return _questionarioRepository;
+            }
+        }
+
+        public IRespostaRepository RespostaRepository
+        {
+            get
+            {
+                if (_respostaRepository == null)
+                {
+                    _respostaRepository = new RespostaRepository(_context);
+                }
+
+                return _respostaRepository;
             }
         }
         #endregion

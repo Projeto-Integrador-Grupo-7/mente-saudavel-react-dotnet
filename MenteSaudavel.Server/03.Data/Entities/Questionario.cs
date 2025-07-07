@@ -1,15 +1,33 @@
-using MenteSaudavel.Server._04._Infrastructure.Enums;
+using MenteSaudavel.Server._03.Data.ValueObjects;
+using MenteSaudavel.Server._04.Infrastructure.Dto;
+using MenteSaudavel.Server._04.Infrastructure.Extensions;
 
 namespace MenteSaudavel.Server._03.Data.Entities
 {
     public class Questionario : Entity
     {
         #region PROPRIEDADES
-        public Usuario Respondente { get; private set; }
+        private Usuario _respondente;
+        public Usuario Respondente
+        {
+            get
+            {
+                return _respondente;
+            }
+            set
+            {
+                if (value is null)
+                {
+                    throw new ArgumentException("Respondente não pode ser nulo.");
+                }
 
-        public int Pontuacao { get; private set; }
+                _respondente = value;
+            }
+        }
 
-        public EnumEstratificacao Estratificacao { get; private set; }
+        public int? Pontuacao { get; private set; }
+
+        public Estratificacao? Estratificacao { get; private set; }
 
         public DateTime DataEnvio { get; private set; }
 
@@ -19,10 +37,10 @@ namespace MenteSaudavel.Server._03.Data.Entities
         #region CONSTRUTORES
         internal Questionario() { }
 
-        public Questionario(Usuario respondente, DateTime dataEnvio)
+        public Questionario(Usuario? respondente)
         {
             Respondente = respondente;
-            DataEnvio = dataEnvio;
+            DataEnvio = DateTime.Now;
         }
         #endregion
 
@@ -34,18 +52,38 @@ namespace MenteSaudavel.Server._03.Data.Entities
 
         public void CalcularPontuacao()
         {
-            Pontuacao = Respostas.Count(resposta => resposta.Valor == 1);
+            Pontuacao = Respostas.Count(resposta => resposta.Valor);
         }
 
         public void DefinirEstratificacao()
         {
-            Estratificacao = Pontuacao switch
+            if (!Pontuacao.HasValue)
             {
-                > 0 and <= 7 => EnumEstratificacao.Leve,
-                >= 8 and <= 14 => EnumEstratificacao.Moderado,
-                >= 15 and <= 20 => EnumEstratificacao.Grave,
-                _ => EnumEstratificacao.NaoIdentificado
+                throw new ArgumentException("Pontuação deve ser calculada antes de definir a estratificação.");
+            }
+
+            Estratificacao = new Estratificacao(Pontuacao.Value);
+        }
+
+        public QuestionarioTO ToDto()
+        {
+            QuestionarioTO questionarioTO = new QuestionarioTO()
+            {
+                Id = Id,
+                Pontuacao = Pontuacao,
+                Estratificacao = Estratificacao,
+                DataEnvio = DataEnvio.GetDataHorario()
             };
+
+            if (Respostas.Any())
+            {
+                questionarioTO.ListaRespostas = Respostas
+                    .OrderBy(resposta => resposta.Numero)
+                    .Select(resposta => resposta.ToDto())
+                    .ToList();
+            }
+
+            return questionarioTO;
         }
         #endregion
 

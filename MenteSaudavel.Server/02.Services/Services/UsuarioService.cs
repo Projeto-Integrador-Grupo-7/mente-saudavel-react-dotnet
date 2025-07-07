@@ -1,6 +1,7 @@
 using MenteSaudavel.Server._02.Services.Interfaces.Services;
 using MenteSaudavel.Server._03.Data.Entities;
-using MenteSaudavel.Server._04._Infrastructure.Enums;
+using MenteSaudavel.Server._04.Infrastructure.Dto;
+using Microsoft.EntityFrameworkCore;
 
 namespace MenteSaudavel.Server._02.Services.Services
 {
@@ -13,19 +14,37 @@ namespace MenteSaudavel.Server._02.Services.Services
             _unitOfWork = unitOfWork;
         }
 
-        public List<Usuario> GetUsuarios()
+        public async Task<UsuarioTO> ValidarLogin(UsuarioTO usuarioTO)
         {
-            return _unitOfWork.UsuarioRepository.GetAll().ToList();
+            Usuario? usuario = await _unitOfWork.UsuarioRepository.GetUsuarioByEmailESenha(usuarioTO);
+
+            if (usuario is null)
+            {
+                throw new ArgumentException("Email ou senha incorretos.");
+            }
+
+            return usuario.ToDto();
         }
 
-        public Usuario CriarUsuario()
+        public async Task<List<UsuarioTO>> GetUsuarios()
         {
-            Usuario usuario = new Usuario("Teste" + DateTime.Now, "", "", new DateOnly(), EnumGenero.Masculino);
+            List<Usuario> listaUsuarios = await _unitOfWork.UsuarioRepository.GetAll().ToListAsync();
+
+            List<UsuarioTO> listaUsuariosTO = listaUsuarios.Select(usuario => usuario.ToDto()).ToList();
+
+            return listaUsuariosTO;
+        }
+
+        public async Task<UsuarioTO> CriarUsuario(UsuarioTO usuarioTO)
+        {
+            Usuario usuario = new Usuario(usuarioTO);
 
             _unitOfWork.UsuarioRepository.Add(usuario);
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangesAsync();
 
-            return usuario;
+            usuarioTO.UsuarioId = usuario.Id;
+
+            return usuarioTO;
         }
     }
 }

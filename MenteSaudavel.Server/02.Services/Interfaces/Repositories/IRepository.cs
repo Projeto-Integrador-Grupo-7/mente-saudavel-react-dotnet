@@ -1,4 +1,6 @@
-﻿namespace MenteSaudavel.Server._02.Services.Interfaces
+using System.Linq.Expressions;
+
+namespace MenteSaudavel.Server._02.Services.Interfaces.Repositories
 {
     public interface IRepository<TEntity>
     {
@@ -6,7 +8,7 @@
 
         IQueryable<TEntity> GetAll();
 
-        TEntity? GetById(int id);
+        Task<TEntity?> GetById(Guid id);
 
         void Add(TEntity entity);
 
@@ -14,8 +16,8 @@
 
         void Delete(TEntity entity);
 
-        IQueryable<TEntity> Find(Func<TEntity, bool> predicate);
+        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
-        bool Any(Func<TEntity, bool> predicate);
+        bool Any(Expression<Func<TEntity, bool>> predicate);
     }
 }

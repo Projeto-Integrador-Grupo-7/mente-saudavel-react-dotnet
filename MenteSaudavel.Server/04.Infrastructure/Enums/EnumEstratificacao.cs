@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace MenteSaudavel.Server._04._Infrastructure.Enums
+namespace MenteSaudavel.Server._04.Infrastructure.Enums
 {
     public enum EnumEstratificacao
     {

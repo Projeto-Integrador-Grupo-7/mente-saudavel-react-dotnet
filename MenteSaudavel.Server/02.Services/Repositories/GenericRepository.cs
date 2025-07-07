@@ -1,4 +1,6 @@
-﻿using MenteSaudavel.Server._02.Services.Interfaces;
+using MenteSaudavel.Server._02.Services.Interfaces.Repositories;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace MenteSaudavel.Server._02.Services.Repositories
 {
@@ -21,9 +23,9 @@ namespace MenteSaudavel.Server._02.Services.Repositories
             return _context.Set<TEntity>().AsQueryable();
         }
 
-        public virtual TEntity? GetById(int id)
+        public async virtual Task<TEntity?> GetById(Guid id)
         {
-            return _context.Find<TEntity>(id);
+            return await _context.FindAsync<TEntity>(id);
         }
 
         public virtual void Add(TEntity entity)
@@ -41,12 +43,12 @@ namespace MenteSaudavel.Server._02.Services.Repositories
             _context.Remove(entity);
         }
 
-        public virtual IQueryable<TEntity> Find(Func<TEntity, bool> predicate)
+        public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Where(predicate).AsQueryable();
+            return _context.Set<TEntity>().Where(predicate);
         }
 
-        public virtual bool Any(Func<TEntity, bool> predicate)
+        public virtual bool Any(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Any(predicate);
         }

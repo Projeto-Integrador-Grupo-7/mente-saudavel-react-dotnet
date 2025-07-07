@@ -1,0 +1,10 @@
+.piechart-container {
+    width: 100%;
+    max-width: 25rem;
+    margin: auto 0;
+    margin-right: 10rem;
+}
+
+h2 {
+    text-align: center;
+}
