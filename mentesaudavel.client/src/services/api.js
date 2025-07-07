@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://localhost:7054/api/',
+    baseURL: 'http://mentesaudavel-001-site1.ktempurl.com/api/',
     headers: {
         'Content-Type': 'application/json'
     }
